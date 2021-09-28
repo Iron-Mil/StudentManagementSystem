@@ -1,27 +1,8 @@
-import backend_logic
-from Model import Model
+from repo import backend_logic
 from flask import Flask
 from flask import jsonify
 from controllers import student_controller, lecture_controller, course_controller
 from blueprints import student_blueprint, lecture_blueprint, course_blueprint
-
-
-'''    
-
-    def lectures(self):
-        return jsonify(self.model.fetch_table("lectures"))
-
-    def courses(self):
-        return jsonify(self.model.fetch_table("courses"))
-
-    def attending_students(self, lecture_id):
-        return jsonify(self.model.attending_students(self, lecture_id))
-
-
-
-
-    def average_grade(self, student_id):
-        return self.model.average_grade(self, student_id)'''
 
 
 app = Flask(__name__)
