@@ -1,6 +1,5 @@
 from flask import request, jsonify
-from service import student_service
-# Extracts data from students database and returns it as a dictionary
+from service import student_service, lecture_service
 
 
 def students():
@@ -8,7 +7,7 @@ def students():
 
 
 def attending_lectures(student_id):
-    return jsonify(student_service.lectures_student_is_attending(student_id))
+    return jsonify(lecture_service.lectures_student_is_attending(student_id))
 
 
 def average_grade(student_id):

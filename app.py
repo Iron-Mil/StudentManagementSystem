@@ -15,25 +15,31 @@ app.register_blueprint(course_blueprint.course_bp, url_prefix='/courses')
 def students():
     return jsonify(student_controller.students())
 
+
 @lecture_blueprint.lecture_bp.route('/')
 def lectures():
     return jsonify(lecture_controller.lectures())
+
 
 @course_blueprint.course_bp.route('/')
 def courses():
     return jsonify(course_controller.courses())
 
+
 @lecture_blueprint.lecture_bp.route('/<lecture_id>/attending_students')
 def attending_students(lecture_id):
     return jsonify(lecture_controller.attending_students(lecture_id))
+
 
 @student_blueprint.student_bp.route('<student_id>/attending_lectures')
 def attending_lectures(student_id):
     return jsonify(student_controller.attending_lectures(student_id))
 
+
 @student_blueprint.student_bp.route('/<student_id>/courses/<course_id>', methods=['POST'])
 def course_grade(student_id, course_id):
     return student_controller.course_grade(student_id, course_id)
+
 
 @student_blueprint.student_bp.route('<student_id>/average_grade')
 def average_grade(student_id):

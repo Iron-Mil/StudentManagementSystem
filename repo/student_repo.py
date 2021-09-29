@@ -54,6 +54,7 @@ def student_lecture_connection(key, value):
     conn.close()
     return result_list_of_dict
 
+
 def student_course_connection(key, value):
     if key == 'student_id':
         sql = "SELECT * FROM student_course_connection WHERE student_id = {}".format(value)
