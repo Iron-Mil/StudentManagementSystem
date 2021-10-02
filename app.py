@@ -1,6 +1,7 @@
 import backend_logic
 from flask import Flask
 from flask import jsonify
+from apscheduler.schedulers.background import BackgroundScheduler
 from controllers import student_controller, lecture_controller, course_controller
 from blueprints import student_blueprint, lecture_blueprint, course_blueprint
 
@@ -44,6 +45,15 @@ def course_grade(student_id, course_id):
 @student_blueprint.student_bp.route('<student_id>/average_grade')
 def average_grade(student_id):
     return student_controller.average_grade(student_id)
+
+
+def school_average_grade_list():
+    course_controller.average_grades()
+
+
+sched = BackgroundScheduler(daemon=True)
+sched.add_job(school_average_grade_list, 'interval', minutes=5)
+sched.start()
 
 
 if __name__ == '__main__':

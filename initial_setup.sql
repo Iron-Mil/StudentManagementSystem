@@ -39,6 +39,11 @@ CREATE TABLE IF NOT EXISTS student_lecture_connection
                 (student_id INTEGER NOT NULL, 
                 lecture_id INTEGER NOT NULL,
                 CONSTRAINT uc_slc UNIQUE (student_id, lecture_id));
+                
+
+CREATE TABLE IF NOT EXISTS average_grade_storage
+		(id INTEGER NOT NULL,
+		grade FLOAT NOT NULL);
                
 
                
