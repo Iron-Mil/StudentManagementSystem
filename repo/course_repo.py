@@ -37,21 +37,24 @@ def read_averages():
     conn.close()
     return averages
 
-def delete_averages():
-    sql = "TRUNCATE average_grade_storage;"
-    # sql = "DELETE FROM average_grade_storage WHERE id = 1"
 
+def delete_oldest_average():
+    sql = "DELETE FROM average_grade_storage WHERE created_at " \
+          "IN (SELECT created_at FROM average_grade_storage ORDER BY created_at ASC LIMIT 1);"
+    execute_sql(sql)
+
+
+def delete_all_averages():
+    sql = "TRUNCATE average_grade_storage;"
     execute_sql(sql)
 
 
 # If a non-fixed amount of grades needs saving
 def save_averages(list_of_averages):
-    sql = """INSERT INTO average_grade_storage (id, grade) \
-          Values({}, {})"""
+    sql = """INSERT INTO average_grade_storage (grade) \
+          Values({})"""
     conn, cur = create_connection()
-    counter = 1
     for average in list_of_averages:
-        cur.execute(sql.format(counter, average))
-        counter += 1
+        cur.execute(sql.format(average))
     conn.commit()
     conn.close()

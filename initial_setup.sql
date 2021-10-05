@@ -42,8 +42,8 @@ CREATE TABLE IF NOT EXISTS student_lecture_connection
                 
 
 CREATE TABLE IF NOT EXISTS average_grade_storage
-		(id INTEGER NOT NULL,
-		grade FLOAT NOT NULL);
+		(grade FLOAT NOT NULL,
+		created_at timestamp default current_timestamp);
                
 
                

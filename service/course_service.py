@@ -5,12 +5,7 @@ def list_of_courses():
     return course_repo.courses()
 
 
-def list_of_average_grades():
-    grade_list = []
-    test = course_repo.read_averages()
-    for temp in test:
-        grade_list.append(temp[1])
-
+def updating_average_grades():
     number_of_grades = 0
     sum_of_grades = 0
 
@@ -20,17 +15,18 @@ def list_of_average_grades():
         for item in lista:
             number_of_grades += 1
             sum_of_grades += item['grade']
-    average_grade = sum_of_grades / number_of_grades
-    grade_list.append(round(average_grade, 3))
 
-    if len(grade_list) > 5:
-        del grade_list[0]
-
-    print("Currently saved grade averages are: ")
-    print(grade_list)
-    print()
-
-
-    # Clears the old order and saves the new one in its place
-    course_repo.delete_averages()
+    grade_list = [sum_of_grades / number_of_grades]
     course_repo.save_averages(grade_list)
+
+    grade_list = course_repo.read_averages()
+    if len(grade_list) > 5:
+        course_repo.delete_oldest_average()
+
+
+def showing_saved_averages():
+    grade_list = course_repo.read_averages()
+    message = "Currently saved grades are: \n \n"
+    for grade in grade_list:
+        message = message + "Average grade {:.3f} saved at:".format(grade[0]) + str(grade[1]) + "\n"
+    return message

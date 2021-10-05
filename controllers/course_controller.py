@@ -7,4 +7,8 @@ def courses():
 
 
 def average_grades():
-    course_service.list_of_average_grades()
+    course_service.updating_average_grades()
+
+
+def showing_saved_averages():
+    return course_service.showing_saved_averages()
