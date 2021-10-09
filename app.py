@@ -1,9 +1,8 @@
 import backend_logic
-from flask import Flask
-from flask import jsonify
+import requests
+from flask import Flask, request
 from apscheduler.schedulers.background import BackgroundScheduler
-from controllers import student_controller, lecture_controller, course_controller
-from blueprints import student_blueprint, lecture_blueprint, course_blueprint
+from blueprints import student_blueprint, lecture_blueprint, course_blueprint, crypto_blueprint
 from service import course_service
 
 
@@ -11,7 +10,7 @@ app = Flask(__name__)
 app.register_blueprint(student_blueprint.student_bp, url_prefix='/students')
 app.register_blueprint(lecture_blueprint.lecture_bp, url_prefix='/lectures')
 app.register_blueprint(course_blueprint.course_bp, url_prefix='/courses')
-
+app.register_blueprint(crypto_blueprint.crypto_bp, url_prefix='/crypto')
 
 @student_blueprint.student_bp.route('/')
 def students():
@@ -58,11 +57,12 @@ def saving_average_grade():
     course_service.updating_average_grades()
 
 
-sched = BackgroundScheduler(daemon=True)
-sched.add_job(saving_average_grade, 'interval', minutes=5)
-sched.start()
+scheduler = BackgroundScheduler(daemon=True)
+scheduler.add_job(saving_average_grade, 'interval', seconds=5)
+scheduler.start()
 
 
 if __name__ == '__main__':
+
     backend_logic.create_tables()
     app.run()
